@@ -9,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="PortalAcademico\**" />
+    <Content Remove="PortalAcademico\**" />
+    <EmbeddedResource Remove="PortalAcademico\**" />
+    <None Remove="PortalAcademico\**" />
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
   </ItemGroup>
 
