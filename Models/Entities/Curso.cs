@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PortalAcademico.Web.Models.Entities
 {
-    public class Curso
+    public class Curso : IValidatableObject
     {
         public int Id { get; set; }
 
@@ -30,5 +30,15 @@ namespace PortalAcademico.Web.Models.Entities
         
         // Relación de navegación
         public ICollection<Matricula> Matriculas { get; set; } = new List<Matricula>();
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (HorarioFin <= HorarioInicio)
+            {
+                yield return new ValidationResult(
+                    "El horario de fin debe ser posterior al horario de inicio.",
+                    new[] { nameof(HorarioFin) });
+            }
+        }
     }
 }

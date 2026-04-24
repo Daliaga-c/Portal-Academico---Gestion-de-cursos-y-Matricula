@@ -13,6 +13,35 @@
     </p>
 </div>
 
+<div class="mb-5">
+    <form asp-controller="Cursos" asp-action="Catalogo" method="get" class="card shadow-sm border-0 p-4 bg-light">
+        <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-funnel me-2"></i>Filtros de búsqueda</h5>
+        <div class="row g-3 align-items-end">
+            <div class="col-md-3">
+                <label for="buscarNombre" class="form-label fw-semibold text-secondary">Nombre del curso</label>
+                <input type="text" class="form-control" id="buscarNombre" name="buscarNombre" placeholder="Ej. Matemáticas" value="@ViewData["BuscarNombre"]">
+            </div>
+            <div class="col-md-2">
+                <label for="minCreditos" class="form-label fw-semibold text-secondary">Mín. Créditos</label>
+                <input type="number" class="form-control" id="minCreditos" name="minCreditos" min="1" placeholder="Ej. 2" value="@ViewData["MinCreditos"]">
+            </div>
+            <div class="col-md-2">
+                <label for="maxCreditos" class="form-label fw-semibold text-secondary">Máx. Créditos</label>
+                <input type="number" class="form-control" id="maxCreditos" name="maxCreditos" min="1" placeholder="Ej. 5" value="@ViewData["MaxCreditos"]">
+            </div>
+            <div class="col-md-3">
+                <label for="horarioBusqueda" class="form-label fw-semibold text-secondary">Horario</label>
+                <input type="time" class="form-control" id="horarioBusqueda" name="horarioBusqueda" value="@ViewData["HorarioBusqueda"]">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100 fw-bold py-2">
+                    <i class="bi bi-search me-1"></i> Filtrar
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
 <div class="row g-4">
     @if (Model != null && Model.Any())
     {
@@ -49,10 +78,16 @@
                         </div>
                     </div>
                     
-                    <div class="card-footer bg-transparent border-0 p-4 pt-0 mt-auto">
-                        <button class="btn btn-outline-primary w-100 rounded-pill fw-semibold py-2">
+                    <div class="card-footer bg-transparent border-0 p-4 pt-0 mt-auto d-flex flex-column gap-2">
+                        <a asp-controller="Cursos" asp-action="Detalles" asp-route-id="@curso.Id" class="btn btn-outline-primary w-100 rounded-pill fw-semibold py-2">
                             Ver Detalles
-                        </button>
+                        </a>
+                        <form asp-controller="Cursos" asp-action="Inscribirse" method="post" class="m-0">
+                            <input type="hidden" name="id" value="@curso.Id" />
+                            <button type="submit" class="btn btn-primary w-100 rounded-pill fw-semibold py-2">
+                                <i class="bi bi-lightning-charge-fill me-1"></i> Inscribirse
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
