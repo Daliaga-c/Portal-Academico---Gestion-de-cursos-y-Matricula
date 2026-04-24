@@ -13,6 +13,22 @@
     </p>
 </div>
 
+@if (TempData["Exito"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show text-center shadow-sm mb-4" role="alert">
+        <i class="bi bi-check-circle-fill me-2"></i> @TempData["Exito"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show text-center shadow-sm mb-4" role="alert">
+        <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
 <div class="mb-5">
     <form asp-controller="Cursos" asp-action="Catalogo" method="get" class="card shadow-sm border-0 p-4 bg-light">
         <h5 class="fw-bold mb-3 text-dark"><i class="bi bi-funnel me-2"></i>Filtros de búsqueda</h5>
