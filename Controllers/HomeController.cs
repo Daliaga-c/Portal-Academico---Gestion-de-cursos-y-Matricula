@@ -1,6 +1,9 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Portal_academico.Models;
+using PortalAcademico.Web.Models.Entities;
+using PortalAcademico.Web.Data;
+
 
 namespace Portal_academico.Controllers;
 
