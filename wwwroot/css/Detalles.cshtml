@@ -1,0 +1,71 @@
+@model PortalAcademico.Web.Models.Entities.Curso
+@{
+    ViewData["Title"] = Model.Nombre;
+}
+
+<link rel="stylesheet" href="~/css/catalogo.css" asp-append-version="true" />
+
+<div class="container mt-4 mb-5">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="Cursos" asp-action="Catalogo" class="text-decoration-none">Catálogo</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Detalles del Curso</li>
+        </ol>
+    </nav>
+
+    <div class="course-header-hero shadow-lg mb-5 mt-3">
+        <span class="badge bg-primary px-3 py-2 rounded-pill mb-3 fs-6 shadow-sm">
+            <i class="bi bi-upc-scan me-1"></i> @Model.Codigo
+        </span>
+        <h1 class="display-4 fw-bold mb-3">@Model.Nombre</h1>
+        <p class="lead text-light opacity-75 mb-0">Adquiere nuevas habilidades y mejora tu perfil profesional con nuestro programa académico especializado.</p>
+    </div>
+
+    <div class="row">
+        <!-- Detalles -->
+        <div class="col-lg-8 mb-4">
+            <h3 class="fw-bold mb-4">Acerca de este curso</h3>
+            <ul class="list-group list-group-flush fs-5 shadow-sm rounded-3">
+                <li class="list-group-item p-4 d-flex align-items-center">
+                    <i class="bi bi-journal-bookmark text-primary fs-3 me-3"></i> 
+                    <div><strong>Créditos Académicos:</strong> <br> <span class="text-muted fs-6">@Model.Creditos créditos válidos para tu malla curricular.</span></div>
+                </li>
+                <li class="list-group-item p-4 d-flex align-items-center">
+                    <i class="bi bi-people text-primary fs-3 me-3"></i> 
+                    <div><strong>Cupo Máximo:</strong> <br> <span class="text-muted fs-6">@Model.CupoMaximo estudiantes por aula.</span></div>
+                </li>
+                <li class="list-group-item p-4 d-flex align-items-center">
+                    <i class="bi bi-clock-history text-primary fs-3 me-3"></i> 
+                    <div><strong>Horario de Clases:</strong> <br> <span class="text-muted fs-6">De @Model.HorarioInicio.ToString(@"hh\:mm") a @Model.HorarioFin.ToString(@"hh\:mm").</span></div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Botón de Inscripción -->
+        <div class="col-lg-4">
+            <div class="card shadow border-0 rounded-4 sticky-top" style="top: 2rem;">
+                <div class="card-body p-4 text-center">
+                    <h4 class="fw-bold mb-3">¿Listo para comenzar?</h4>
+                    <p class="text-muted small mb-4">Asegura tu cupo en este curso ahora. Las vacantes son limitadas.</p>
+                    
+                    @if (TempData["Exito"] != null)
+                    {
+                        <div class="alert alert-success text-start small mb-3">@TempData["Exito"]</div>
+                    }
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger text-start small mb-3">@TempData["Error"]</div>
+                    }
+
+                    <form asp-controller="Cursos" asp-action="Inscribirse" method="post">
+                        <input type="hidden" name="id" value="@Model.Id" />
+                        <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill shadow-sm fw-bold mb-2 py-3">
+                            <i class="bi bi-lightning-charge-fill me-1"></i> ¡Inscribirse Ahora!
+                        </button>
+                    </form>
+                    <span class="text-muted small"><i class="bi bi-shield-check"></i> Inscripción segura</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+@model IEnumerable<PortalAcademico.Web.Models.Entities.Curso>
+@{
+    ViewData["Title"] = "Catálogo de Cursos";
+}
+
+<link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/catalogo.css" asp-append-version="true" />
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold"><i class="bi bi-compass text-primary"></i> Catálogo de Cursos</h2>
+    <span class="text-muted">@Model.Count() resultados encontrados</span>
+</div>
+
+<!-- Panel de Filtros -->
+<div class="filter-panel shadow-sm mb-5">
+    <form method="get" asp-action="Catalogo" class="row g-3 align-items-end">
+        <div class="col-md-4">
+            <label for="buscarNombre" class="form-label fw-semibold text-secondary small">Buscar por Nombre</label>
+            <div class="input-group">
+                <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
+                <input type="text" class="form-control" id="buscarNombre" name="buscarNombre" value="@ViewData["BuscarNombre"]" placeholder="Ej: Programación">
+            </div>
+        </div>
+        
+        <div class="col-md-2">
+            <label for="minCreditos" class="form-label fw-semibold text-secondary small">Créditos Min.</label>
+            <input type="number" class="form-control" id="minCreditos" name="minCreditos" value="@ViewData["MinCreditos"]" min="0">
+        </div>
+
+        <div class="col-md-2">
+            <label for="maxCreditos" class="form-label fw-semibold text-secondary small">Créditos Max.</label>
+            <input type="number" class="form-control" id="maxCreditos" name="maxCreditos" value="@ViewData["MaxCreditos"]" min="0">
+        </div>
+
+        <div class="col-md-2">
+            <label for="horarioBusqueda" class="form-label fw-semibold text-secondary small">Horario Disponible</label>
+            <input type="time" class="form-control" id="horarioBusqueda" name="horarioBusqueda" value="@ViewData["HorarioBusqueda"]">
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100 fw-semibold">Filtrar</button>
+        </div>
+    </form>
+</div>
+
+<!-- Listado de Cursos -->
+<div class="row g-4">
+    @if (Model.Any())
+    {
+        @foreach (var curso in Model)
+        {
+            <div class="col-lg-4 col-md-6">
+                <div class="card course-card shadow-sm h-100">
+                    <div class="card-top-gradient"></div>
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="badge bg-light text-primary border border-primary-subtle rounded-pill px-3 py-2">
+                                <i class="bi bi-upc-scan me-1"></i> @curso.Codigo
+                            </span>
+                        </div>
+                        
+                        <h4 class="card-title fw-bold mb-4 text-dark">@curso.Nombre</h4>
+                        
+                        <div class="d-flex flex-column gap-3 text-secondary mb-4">
+                            <div class="d-flex align-items-center">
+                                <div class="icon-wrapper"><i class="bi bi-journal-bookmark"></i></div>
+                                <span><strong class="text-dark">@curso.Creditos</strong> Créditos</span>
+                            </div>
+                            <div class="d-flex align-items-center">
+                                <div class="icon-wrapper"><i class="bi bi-clock"></i></div>
+                                <span>@curso.HorarioInicio.ToString(@"hh\:mm") - @curso.HorarioFin.ToString(@"hh\:mm")</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer bg-transparent border-0 p-4 pt-0 mt-auto">
+                        <a asp-controller="Cursos" asp-action="Detalles" asp-route-id="@curso.Id" class="btn btn-outline-primary w-100 rounded-pill fw-semibold py-2">
+                            Ver Detalles
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12">
+            <div class="alert alert-warning text-center py-5 shadow-sm rounded-3" role="alert">
+                <i class="bi bi-emoji-frown display-4 d-block mb-3"></i>
+                <h4 class="alert-heading">No se encontraron cursos</h4>
+                <p>Prueba ajustando los filtros de búsqueda.</p>
+            </div>
+        </div>
+    }
+</div>

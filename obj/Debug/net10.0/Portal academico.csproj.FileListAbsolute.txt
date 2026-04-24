@@ -280,3 +280,5 @@ C:\Users\diego\OneDrive\Escritorio\Proyectos\Programacion I\Portal academico\obj
 C:\Users\diego\OneDrive\Escritorio\Proyectos\Programacion I\Portal academico\obj\Debug\net10.0\Portal academico.pdb
 C:\Users\diego\OneDrive\Escritorio\Proyectos\Programacion I\Portal academico\obj\Debug\net10.0\Portal academico.genruntimeconfig.cache
 C:\Users\diego\OneDrive\Escritorio\Proyectos\Programacion I\Portal academico\obj\Debug\net10.0\ref\Portal academico.dll
+C:\Users\diego\OneDrive\Escritorio\Proyectos\Programacion I\Portal academico\obj\Debug\net10.0\compressed\xt8nf4pplp-{0}-7b0b41tjxo-7b0b41tjxo.gz
+C:\Users\diego\OneDrive\Escritorio\Proyectos\Programacion I\Portal academico\obj\Debug\net10.0\compressed\cs4r0f70jp-{0}-mx3aidmep8-mx3aidmep8.gz
