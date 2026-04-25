@@ -1,0 +1,50 @@
+@model PortalAcademico.Web.Models.Entities.Curso
+@{ ViewData["Title"] = "Crear Curso"; }
+
+<div class="container mt-5 mb-5">
+    <h2 class="fw-bold mb-4">Crear Nuevo Curso</h2>
+    <form asp-action="Create" method="post" class="card shadow-sm p-4 bg-light border-0">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="Codigo" class="form-label"></label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Nombre" class="form-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="Creditos" class="form-label"></label>
+                <input asp-for="Creditos" class="form-control" />
+                <span asp-validation-for="Creditos" class="text-danger"></span>
+            </div>
+            <div class="col-md-4">
+                <label asp-for="CupoMaximo" class="form-label"></label>
+                <input asp-for="CupoMaximo" class="form-control" />
+                <span asp-validation-for="CupoMaximo" class="text-danger"></span>
+            </div>
+            <div class="col-md-4 d-flex align-items-end">
+                <div class="form-check form-switch fs-5">
+                    <input asp-for="Activo" class="form-check-input" type="checkbox" role="switch" checked>
+                    <label asp-for="Activo" class="form-check-label">Curso Activo</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="HorarioInicio" class="form-label"></label>
+                <input asp-for="HorarioInicio" type="time" class="form-control" />
+                <span asp-validation-for="HorarioInicio" class="text-danger"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="HorarioFin" class="form-label"></label>
+                <input asp-for="HorarioFin" type="time" class="form-control" />
+                <span asp-validation-for="HorarioFin" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Guardar</button>
+            <a asp-action="Catalogo" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
