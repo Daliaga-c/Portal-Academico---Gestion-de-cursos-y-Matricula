@@ -70,24 +70,46 @@ namespace Portal_academico.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId == null) return Challenge();
 
+            // Determinar la URL de origen para mostrar las alertas en la misma vista
+            string? referer = Request.Headers["Referer"].ToString();
+            string returnUrl = string.IsNullOrEmpty(referer) ? (Url.Action("Index", "Home") ?? "/") : referer;
+
             if (curso.Matriculas.Count >= curso.CupoMaximo)
             {
                 TempData["Error"] = "El curso ya no tiene cupos disponibles.";
-                return RedirectToAction(nameof(Detalles), new { id });
+                return Redirect(returnUrl);
             }
 
             if (curso.Matriculas.Any(m => m.UsuarioId == userId))
             {
                 TempData["Error"] = "Ya te encuentras inscrito en este curso.";
-                return RedirectToAction(nameof(Detalles), new { id });
+                return Redirect(returnUrl);
             }
 
-            var matricula = new Matricula { CursoId = id, UsuarioId = userId };
+            // Validar que no haya solapamiento de horarios con otras matrículas
+            var matriculasUsuario = await _context.Matriculas
+                .Include(m => m.Curso)
+                .Where(m => m.UsuarioId == userId)
+                .ToListAsync();
+
+            bool haySolapamiento = matriculasUsuario.Any(m => 
+                m.Curso != null &&
+                curso.HorarioInicio < m.Curso.HorarioFin && 
+                curso.HorarioFin > m.Curso.HorarioInicio);
+
+            if (haySolapamiento)
+            {
+                TempData["Error"] = "El horario de este curso se solapa con otro curso en el que ya estás matriculado.";
+                return Redirect(returnUrl);
+            }
+
+            // Crear la matrícula en estado Pendiente
+            var matricula = new Matricula { CursoId = id, UsuarioId = userId, Estado = EstadoMatricula.Pendiente };
             _context.Matriculas.Add(matricula);
             await _context.SaveChangesAsync();
 
-            TempData["Exito"] = "¡Inscripción realizada con éxito!";
-            return RedirectToAction(nameof(Detalles), new { id });
+            TempData["Exito"] = "¡Inscripción solicitada! Tu matrícula está en estado Pendiente.";
+            return Redirect(returnUrl);
         }
     }
 }
